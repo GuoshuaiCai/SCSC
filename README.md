@@ -62,7 +62,8 @@ wcorr.dw<-wcorr.calc.allpairs(exp.data,exp.data,w.exp.do,w.exp.do,method="pearso
 wcorr.sl<-wcorr.calc.allpairs(exp.data,exp.data,w.exp.sl,w.exp.sl,method="pearson",mode="weighted",alpha=1)
 
 #imputed data, by SAVER
-wcorr.sv<-wcorr.calc.allpairs(exp.sv,exp.sv,method="pearson",mode="imputed.saver",exp.saver.res=exp.saver.res, gen.saver.res=exp.saver.res)
+wcorr.sv<-wcorr.calc.allpairs(exp.sv,exp.sv,method="pearson",mode="imputed.saver",
+  exp.saver.res=exp.saver.res, gen.saver.res=exp.saver.res)
 
 #imputed data, by MAGIC
 wcorr.mg<-wcorr.calc.allpairs(exp.mg,exp.mg,method="pearson",mode="imputed")
