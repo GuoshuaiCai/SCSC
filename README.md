@@ -63,7 +63,7 @@ wcorr.sl<-wcorr.calc.allpairs(exp.data,exp.data,w.exp.sl,w.exp.sl,method="pearso
 
 #imputed data, by SAVER
 wcorr.sv<-wcorr.calc.allpairs(exp.sv,exp.sv,method="pearson",mode="imputed.saver",
-  exp.saver.res=exp.saver.res, gen.saver.res=exp.saver.res)
+                              exp.saver.res=exp.saver.res, gen.saver.res=exp.saver.res)
 
 #imputed data, by MAGIC
 wcorr.mg<-wcorr.calc.allpairs(exp.mg,exp.mg,method="pearson",mode="imputed")
@@ -74,6 +74,7 @@ wcorr.ks<-wcorr.calc.allpairs(exp.ks,exp.ks,method="pearson",mode="imputed")
 
 ### plot
 ```{r}
-wcorr.plot(exp.data, exp.data,w.exp.do,w.exp.do,gen.feature="Gene3491",exp.feature="Gene3424",alpha=1,color="red",breaks=20)
+wcorr.plot(exp.data, exp.data,w.exp.do,w.exp.do,gen.feature="Gene3491",exp.feature="Gene3424",
+           alpha=1,color="red",breaks=20)
 ```
 <img src="https://github.com/GuoshuaiCai/SEEK/blob/main/plot_demo.png" width="500" height="500">
