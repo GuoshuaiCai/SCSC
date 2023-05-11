@@ -18,7 +18,6 @@ Other tools for weight calculation (scLink) or data imputation (SAVER, MAGIC, kn
 
 Others: Tool dependencies of all above tools.
 
-<br><br>
 ## Example
 ```{r}
 load("SCSC_func.R")
