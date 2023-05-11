@@ -37,6 +37,7 @@ exp.data<-normalize.quant(exp.count)
 ```
 
 ### normalization
+```{r}
 exp.saver<-data.impute(exp.count, method="saver", nc=4)
 exp.saver.res<-exp.saver$res
 exp.sv<-exp.saver$data
@@ -44,6 +45,7 @@ exp.sv<-exp.saver$data
 exp.mg<-data.impute(exp.count, method="magic")$data
 
 exp.ks<-data.impute(exp.count, method="knn-smoothing", k=15)$data
+```
 
 ### corrlation calculation
 ```{r}
@@ -60,7 +62,7 @@ wcorr.dw<-wcorr.calc.allpairs(exp.data,exp.data,w.exp.do,w.exp.do,method="pearso
 wcorr.sl<-wcorr.calc.allpairs(exp.data,exp.data,w.exp.sl,w.exp.sl,method="pearson",mode="weighted",alpha=1)
 
 #imputed data, by SAVER
-wcorr.sv<-wcorr.calc.allpairs(exp.sv,exp.sv,method="pearson",mode="imputed.saver",\exp.saver.res=exp.saver.res, gen.saver.res=exp.saver.res)
+wcorr.sv<-wcorr.calc.allpairs(exp.sv,exp.sv,method="pearson",mode="imputed.saver",\  exp.saver.res=exp.saver.res, gen.saver.res=exp.saver.res)
 
 #imputed data, by MAGIC
 wcorr.mg<-wcorr.calc.allpairs(exp.mg,exp.mg,method="pearson",mode="imputed")
