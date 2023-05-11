@@ -4,7 +4,8 @@
 
 
 ### Platform/data Compatibility
-The proposed package is versatile and is logically adaptable to single-cell multi-omic measures. It can be used for assessing the gene-gene co-exression and genetic feature-gene expression correlation.
+The proposed package is versatile and is logically adaptable to single-cell multi-omic measures. It can be used for assessing the gene-gene co-exression and genetic feature-gene expression correlation. Four strategies (conventional, non-zero, dropout-weighted, imputation) ![image](https://github.com/GuoshuaiCai/SCSC/assets/16183734/2ecc3210-83ee-4e28-8b8c-542b74ff209c)
+
 
 ### Core tool dependencies:
 
@@ -24,7 +25,7 @@ load("SCSC_func.R")
 load("data_demo.RData")
 ```
 
-### weight calculation
+### weight calculation (for weighted strategy)
 ```{r}
 
 w.exp.do<-weight.calc(exp.count,type="dropout",nc=4)
@@ -36,7 +37,7 @@ w.exp.sl<-weight.calc(exp.count,type="sclink",nc=4)
 exp.data<-normalize.quant(exp.count)
 ```
 
-### normalization
+### Data imputation (for imputation strategy), data will be imputated and normalized
 ```{r}
 exp.saver<-data.impute(exp.count, method="saver", nc=4)
 exp.saver.res<-exp.saver$res
@@ -49,7 +50,7 @@ exp.ks<-data.impute(exp.count, method="knn-smoothing", k=15)$data
 
 ### corrlation calculation
 ```{r}
-#all data
+#all data (conventional)
 wcorr.eq<-wcorr.calc.allpairs(exp.data,exp.data,method="pearson",mode="equal")
 
 #non-zero data
