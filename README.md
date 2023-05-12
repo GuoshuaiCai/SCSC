@@ -75,7 +75,7 @@ wcorr.ks<-wcorr.calc.allpairs(exp.ks,exp.ks,method="pearson",mode="imputed")
 
 ### plot
 ```{r}
-wcorr.plot(exp.data, exp.data,w.exp.do,w.exp.do,gen.feature="Gene3491",exp.feature="Gene3424",
-           alpha=3,color="red",breaks=20)
+wcorr.plot(exp.data, exp.data,w.exp.do,w.exp.do,gen.feature="Gene3599",exp.feature="Gene3408",
+           alpha=2,color="red",breaks=100)
 ```
 <img src="https://github.com/GuoshuaiCai/SCSC/blob/main/plot_demo.png" width="500" height="500">
