@@ -4,7 +4,7 @@
 
 
 ### Platform/data Compatibility
-The proposed package is versatile and is logically adaptable to single-cell multi-omic measures. It can be used for assessing the gene-gene co-exression and genetic feature-gene expression correlation. Four strategies (conventional, non-zero, dropout-weighted, imputation) were enabled.
+The proposed package is versatile and is logically adaptable to single-cell multi-omic measures. It can be used for assessing the gene-gene co-exression and genetic feature-gene expression correlation. Four strategies (classical, non-zero, dropout-weighted, imputation) were enabled.
 
 
 ### Core tool dependencies:
@@ -46,11 +46,13 @@ exp.sv<-exp.saver$data
 exp.mg<-data.impute(exp.count, method="magic")$data
 
 exp.ks<-data.impute(exp.count, method="knn-smoothing", k=15)$data
+
+exp.zw<-data.impute(exp.count, method="zinbwave", k=2, nc=4)$data
 ```
 
 ### corrlation calculation
 ```{r}
-#all data (conventional)
+#all data (classical)
 wcorr.eq<-wcorr.calc.allpairs(exp.data,exp.data,method="pearson",mode="equal")
 
 #non-zero data
@@ -71,6 +73,9 @@ wcorr.mg<-wcorr.calc.allpairs(exp.mg,exp.mg,method="pearson",mode="imputed")
 
 #imputed data, by knn-smoothing
 wcorr.ks<-wcorr.calc.allpairs(exp.ks,exp.ks,method="pearson",mode="imputed")
+
+#imputed data, by zinbwave
+wcorr.zw<-wcorr.calc.allpairs(exp.zw,exp.zw,method="pearson",mode="imputed")
 ```
 
 ### plot
