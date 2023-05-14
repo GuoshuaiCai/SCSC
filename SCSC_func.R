@@ -1,4 +1,4 @@
-weight.calc<-function(count, K=2, epsilon=1000, nc=1, celltype=NULL,type="dropout", plot=FALSE){
+weight.calc<-function(count, k=2, epsilon=1000, nc=1, celltype=NULL,type="dropout", plot=FALSE){
 
   if(is.null(celltype)){
     celltype<-rep("cell1",ncol(count))
@@ -17,9 +17,9 @@ weight.calc<-function(count, K=2, epsilon=1000, nc=1, celltype=NULL,type="dropou
 
     #zinb.wave
     exp.obj <- DESeqDataSetFromMatrix(countData = count, colData=coldata, design=as.formula(paste0("~",covar)))
-    zinb.fit <- zinbFit(exp.obj, K=K, epsilon=epsilon,BPPARAM=BiocParallel::MulticoreParam(nc))
-    zinb.wave <- zinbwave(exp.obj, fitted_model = zinb.fit, K = 2,
-                             epsilon=1000,
+    zinb.fit <- zinbFit(exp.obj, K=k, epsilon=epsilon,BPPARAM=BiocParallel::MulticoreParam(nc))
+    zinb.wave <- zinbwave(exp.obj, fitted_model = zinb.fit, K = k,
+                             epsilon=epsilon,
                              observationalWeights = TRUE)
     w<- assay(zinb.wave, "weights")
   }
@@ -68,7 +68,7 @@ normalize.quant<-function(count, method="totalcount", scale.factor=NULL){
   return(data)
 }
 
-data.impute<-function(count, method="saver", nc=1, k=15){
+data.impute<-function(count, method="saver", nc=1, k=15, epsilon=1000, celltype=NULL){
   if(method=="saver"){
     library("SAVER")
     saver.res <- saver(exp.count, ncores = nc)
@@ -87,7 +87,35 @@ data.impute<-function(count, method="saver", nc=1, k=15){
     exp.data <- t(magic(t(exp.data))$result)
     return(list("data"=exp.data))
   }
+
+  if(method=="zinbwave"){
+
+    if(is.null(celltype)){
+      celltype<-rep("cell1",ncol(count))
+      covar<-1
+    }else{
+      covar<-"cluster"
+    }
+
+    coldata<-data.frame(cluster=factor(celltype))
+    rownames(coldata) <- colnames(count)
+    
+    library("zinbwave")
+    library("DESeq2")
+
+    #zinb.wave
+    exp.obj <- DESeqDataSetFromMatrix(countData = count, colData=coldata, design=as.formula(paste0("~",covar)))
+    zinb.fit <- zinbFit(exp.obj, K=k, epsilon=epsilon,BPPARAM=BiocParallel::MulticoreParam(nc))
+    zinb.wave <- zinbwave(exp.obj, fitted_model = zinb.fit, K = k,
+                             epsilon=epsilon,
+                             imputedValues = TRUE)
+    exp.count.wave<- assay(zinb.wave, "imputedValues")
+
+    exp.data <- normalize.quant(exp.count.wave)
+    return(list("data"=exp.data,"res"=zinb.wave))
+  }
 }
+
 
 wcorr.calc<-function(dat.exp, dat.gen, w.exp, w.gen, alpha=3, method="pearson", celltype=NULL, type="GT", mode="weighted", exp.saver.res=NULL, gen.saver.res=NULL){
 
