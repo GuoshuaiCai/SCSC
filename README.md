@@ -15,7 +15,7 @@ DESeq2, https://bioconductor.org/packages/release/bioc/html/DESeq2.html
 
 wcorr, https://cran.r-project.org/web/packages/wCorr/index.html
 
-Other tools for weight calculation (scLink) or data imputation (SAVER, MAGIC, knn-smoothing) are also implemented.
+Other tools for weight calculation (scLink) or data imputation (SAVER, MAGIC, knn-smoothing, zinbwave) are also implemented.
 
 Others: Tool dependencies of all above tools.
 
